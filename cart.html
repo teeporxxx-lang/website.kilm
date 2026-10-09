@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>ตะกร้า | ร้านก๋วยเตี๋ยว</title>
+
+
+<style>
+
+/* =========================
+   ตั้งค่าพื้นฐาน
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7ef;
+    padding-bottom: 90px;
+}
+
+
+/* =========================
+   ส่วนหัว
+========================= */
+
+.header {
+    background: linear-gradient(135deg, #ff8a00, #ff6500);
+    color: white;
+    padding: 22px 20px;
+    border-radius: 0 0 25px 25px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 6px 0 0;
+    font-size: 14px;
+}
+
+
+/* =========================
+   เนื้อหา
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 18px;
+}
+
+
+/* =========================
+   กล่อง
+========================= */
+
+.card {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 18px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #e85f00;
+}
+
+
+/* =========================
+   รายการอาหาร
+========================= */
+
+.item {
+    padding: 12px 0;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    line-height: 1.6;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.item-price {
+    color: #f26a00;
+    font-weight: bold;
+    float: right;
+}
+
+
+/* =========================
+   ท็อปปิ้ง
+========================= */
+
+.topping {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* =========================
+   หมายเหตุ
+========================= */
+
+textarea {
+    width: 100%;
+
+    min-height: 100px;
+
+    padding: 12px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    font-family: Arial, sans-serif;
+
+    resize: none;
+
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #ff7200;
+}
+
+
+/* =========================
+   ราคารวม
+========================= */
+
+.total-box {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.total-title {
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.total-price {
+    font-size: 24px;
+
+    color: #f06400;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   ปุ่มยืนยัน
+========================= */
+
+.confirm {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 13px;
+
+    background: #ff7200;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 15px;
+}
+
+.confirm:hover {
+    background: #e86100;
+}
+
+.confirm:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================
+   ปุ่มกลับเมนู
+========================= */
+
+.back-menu {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 2px solid #ff7200;
+
+    border-radius: 13px;
+
+    background: white;
+
+    color: #ff7200;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+}
+
+
+/* =========================
+   ไม่มีสินค้า
+========================= */
+
+.empty {
+    text-align: center;
+
+    padding: 35px 10px;
+
+    color: #777;
+}
+
+.empty-icon {
+    font-size: 50px;
+}
+
+
+/* =========================
+   แถบเมนูด้านล่าง
+========================= */
+
+.bottom-nav {
+    position: fixed;
+
+    bottom: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 72px;
+
+    background: white;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    box-shadow:
+        0 -3px 15px
+        rgba(0,0,0,0.12);
+
+    z-index: 100;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+
+    color: #666;
+
+    text-align: center;
+
+    padding-top: 8px;
+
+    font-size: 12px;
+}
+
+.bottom-nav span {
+    display: block;
+
+    font-size: 24px;
+
+    margin-bottom: 2px;
+}
+
+.bottom-nav .active {
+    color: #ff7200;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   โทรศัพท์จอเล็ก
+========================= */
+
+@media (max-width: 400px) {
+
+    .container {
+        padding: 14px;
+    }
+
+    .header {
+        padding: 20px 16px;
+    }
+
+    .total-price {
+        font-size: 21px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ส่วนหัว
+========================= -->
+
+<div class="header">
+
+    <h2>
+        🛒 ตะกร้าของฉัน
+    </h2>
+
+    <p>
+        ตรวจสอบรายการก่อนสั่งซื้อ
+    </p>
+
+</div>
+
+
+
+<!-- =========================
+     เนื้อหา
+========================= -->
+
+<div class="container">
+
+
+    <!-- =====================
+         รายการอาหาร
+    ====================== -->
+
+    <div class="card">
+
+        <h3>
+            🍜 รายการก๋วยเตี๋ยว
+        </h3>
+
+        <div id="orderList"></div>
+
+    </div>
+
+
+
+    <!-- =====================
+         หมายเหตุ
+    ====================== -->
+
+    <div class="card">
+
+        <h3>
+            📝 หมายเหตุเพิ่มเติม
+        </h3>
+
+        <textarea
+            id="description"
+            placeholder="เช่น ไม่ใส่ผัก, ไม่ใส่กระเทียมเจียว, ไม่เผ็ด">
+        </textarea>
+
+    </div>
+
+
+
+    <!-- =====================
+         ราคารวม
+    ====================== -->
+
+    <div class="card">
+
+        <div class="total-box">
+
+            <div class="total-title">
+                ยอดรวม
+            </div>
+
+            <div class="total-price">
+
+                <span id="total">
+                    0
+                </span>
+
+                บาท
+
+            </div>
+
+        </div>
+
+
+        <!-- ปุ่มยืนยัน -->
+
+        <button
+            class="confirm"
+            onclick="confirmOrder()">
+
+            ✅ ยืนยันการสั่งซื้อ
+
+        </button>
+
+
+        <!-- กลับเมนู -->
+
+        <button
+            class="back-menu"
+            onclick="location.href='menu.html'">
+
+            ← เลือกอาหารเพิ่ม
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================
+     เมนูด้านล่าง
+========================= -->
+
+<div class="bottom-nav">
+
+
+    <a href="menu.html">
+
+        <span>🍜</span>
+
+        เมนูทั้งหมด
+
+    </a>
+
+
+    <a href="cart.html"
+       class="active">
+
+        <span>🛒</span>
+
+        ตะกร้า
+
+    </a>
+
+
+    <a href="orders.html">
+
+        <span>📋</span>
+
+        รายการสั่ง
+
+    </a>
+
+
+    <a href="profile.html">
+
+        <span>👤</span>
+
+        ผู้ใช้งาน
+
+    </a>
+
+
+</div>
+
+
+
+<script>
+
+/* ==========================================
+   ดึงข้อมูลที่ลูกค้าเลือกไว้
+========================================== */
+
+let selected =
+    JSON.parse(
+        localStorage.getItem("selectedNoodle")
+    ) || {};
+
+
+/* ==========================================
+   ดึงเมนูแนะนำจากตะกร้า
+========================================== */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+
+/* ==========================================
+   ตัวแปรราคารวม
+
+   ก๋วยเตี๋ยวเริ่มต้น 25 บาท
+========================================== */
+
+let total = 25;
+
+
+/* ==========================================
+   กล่องแสดงรายการ
+========================================== */
+
+let orderList =
+    document.getElementById("orderList");
+
+
+/* ==========================================
+   ตรวจสอบว่ามีข้อมูลหรือไม่
+========================================== */
+
+let hasOrder = false;
+
+
+
+/* ==========================================
+   แสดงเมนูแนะนำ
+========================================== */
+
+if (cart.length > 0) {
+
+    hasOrder = true;
+
+
+    cart.forEach(function(item) {
+
+        orderList.innerHTML += `
+
+            <div class="item">
+
+                <span class="item-name">
+                    🍜 ${item.name}
+                </span>
+
+                <span class="item-price">
+                    ${item.price} บาท
+                </span>
+
+            </div>
+
+        `;
+
+
+        total +=
+            Number(item.price);
+
+    });
+
+}
+
+
+
+/* ==========================================
+   แสดงเส้น
+========================================== */
+
+if (selected.noodle) {
+
+    hasOrder = true;
+
+
+    orderList.innerHTML += `
+
+        <div class="item">
+
+            <span class="item-name">
+                🍜 เส้น
+            </span>
+
+            <span>
+                ${selected.noodle}
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* ==========================================
+   แสดงน้ำซุป
+========================================== */
+
+if (selected.soup) {
+
+    hasOrder = true;
+
+
+    orderList.innerHTML += `
+
+        <div class="item">
+
+            <span class="item-name">
+                🥣 น้ำซุป
+            </span>
+
+            <span>
+                ${selected.soup}
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* ==========================================
+   แสดงท็อปปิ้ง
+
+   ท็อปปิ้งละ 5 บาท
+========================================== */
+
+if (
+    selected.toppings &&
+    selected.toppings.length > 0
+) {
+
+    hasOrder = true;
+
+
+    selected.toppings.forEach(function(topping) {
+
+
+        orderList.innerHTML += `
+
+            <div class="item topping">
+
+                <span class="item-name">
+                    🥩 ${topping}
+                </span>
+
+                <span class="item-price">
+                    5 บาท
+                </span>
+
+            </div>
+
+        `;
+
+
+        total += 5;
+
+    });
+
+}
+
+
+
+/* ==========================================
+   ถ้ายังไม่มีสินค้า
+========================================== */
+
+if (!hasOrder) {
+
+    orderList.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🛒
+            </div>
+
+            <h3>
+                ตะกร้ายังว่าง
+            </h3>
+
+            <p>
+                กรุณาเลือกเมนูก่อนสั่งซื้อ
+            </p>
+
+        </div>
+
+    `;
+
+
+    total = 0;
+
+}
+
+
+
+/* ==========================================
+   แสดงราคารวม
+========================================== */
+
+document.getElementById("total").innerText =
+    total;
+
+
+
+/* ==========================================
+   ยืนยันการสั่งซื้อ
+========================================== */
+
+function confirmOrder() {
+
+
+    /* ถ้าไม่มีอาหาร */
+
+    if (!hasOrder) {
+
+        alert(
+            "กรุณาเลือกอาหารก่อนยืนยันการสั่งซื้อ"
+        );
+
+        return;
+
+    }
+
+
+    /* ======================================
+       ดึงหมายเหตุ
+    ====================================== */
+
+    let description =
+        document.getElementById(
+            "description"
+        ).value.trim();
+
+
+
+    /* ======================================
+       ดึงออเดอร์เก่า
+    ====================================== */
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+
+    /* ======================================
+       สร้างออเดอร์ใหม่
+    ====================================== */
+
+    let newOrder = {
+
+        /* เลขออเดอร์ */
+
+        id: Date.now(),
+
+
+        /* เส้น */
+
+        noodle:
+            selected.noodle || "",
+
+
+        /* น้ำซุป */
+
+        soup:
+            selected.soup || "",
+
+
+        /* ท็อปปิ้ง */
+
+        toppings:
+            selected.toppings || [],
+
+
+        /* หมายเหตุ */
+
+        description:
+            description,
+
+
+        /* ราคา */
+
+        total:
+            total,
+
+
+        /* วันที่และเวลา */
+
+        date:
+            new Date().toLocaleString(
+                "th-TH"
+            ),
+
+
+        /* สถานะเริ่มต้น */
+
+        status:
+            "new",
+
+
+        statusText:
+            "รอรับออเดอร์"
+
+    };
+
+
+
+    /* ======================================
+       เพิ่มออเดอร์
+    ====================================== */
+
+    orders.push(newOrder);
+
+
+
+    /* ======================================
+       บันทึกออเดอร์
+    ====================================== */
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+
+    /* ======================================
+       ล้างข้อมูลตะกร้า
+    ====================================== */
+
+    localStorage.removeItem(
+        "selectedNoodle"
+    );
+
+
+    localStorage.removeItem(
+        "cart"
+    );
+
+
+
+    /* ======================================
+       แจ้งเตือน
+    ====================================== */
+
+    alert(
+        "✅ สั่งอาหารเรียบร้อยแล้ว\n\n" +
+        "ร้านได้รับออเดอร์ของคุณแล้ว"
+    );
+
+
+
+    /* ======================================
+       ไปหน้ารายการสั่งซื้อ
+    ====================================== */
+
+    window.location.href =
+        "orders.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

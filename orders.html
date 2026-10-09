@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>รายการสั่งซื้อ</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #fff7ef;
+    padding-bottom: 90px;
+}
+
+.header {
+    background: #ff7200;
+    color: white;
+    padding: 22px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 18px;
+}
+
+.order {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 18px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.status {
+    background: #fff0df;
+    color: #ef6500;
+    padding: 8px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.total {
+    color: #f06400;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: #777;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    box-shadow: 0 -3px 15px rgba(0,0,0,.15);
+}
+
+.bottom-nav a {
+    text-align: center;
+    text-decoration: none;
+    color: #666;
+    padding-top: 9px;
+    font-size: 12px;
+}
+
+.bottom-nav span {
+    display: block;
+    font-size: 23px;
+}
+
+.active {
+    color: #ff7200 !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h2>📋 รายการสั่งซื้อ</h2>
+</div>
+
+<div class="container">
+
+<div id="orders"></div>
+
+</div>
+
+
+<div class="bottom-nav">
+
+<a href="menu.html">
+<span>🍜</span>
+เมนูทั้งหมด
+</a>
+
+<a href="cart.html">
+<span>🛒</span>
+ตะกร้า
+</a>
+
+<a href="orders.html" class="active">
+<span>📋</span>
+รายการสั่ง
+</a>
+
+<a href="profile.html">
+<span>👤</span>
+ผู้ใช้งาน
+</a>
+
+</div>
+
+
+<script>
+
+let orders =
+JSON.parse(localStorage.getItem("orders")) || [];
+
+let box = document.getElementById("orders");
+
+
+if (orders.length === 0) {
+
+    box.innerHTML = `
+        <div class="empty">
+            <h2>📋</h2>
+            <p>ยังไม่มีรายการสั่งซื้อ</p>
+        </div>
+    `;
+
+}
+
+
+orders.slice().reverse().forEach(function(order) {
+
+    let toppings = "";
+
+    if (order.toppings.length > 0) {
+
+        toppings = order.toppings.join(", ");
+
+    } else {
+
+        toppings = "ไม่มี";
+
+    }
+
+
+    box.innerHTML += `
+
+        <div class="order">
+
+            <h3>🍜 ออเดอร์ #${order.id}</h3>
+
+            <p>
+                <b>เส้น:</b>
+                ${order.noodle || "-"}
+            </p>
+
+            <p>
+                <b>น้ำซุป:</b>
+                ${order.soup || "-"}
+            </p>
+
+            <p>
+                <b>ท็อปปิ้ง:</b>
+                ${toppings}
+            </p>
+
+            <p>
+                <b>หมายเหตุ:</b>
+                ${order.description || "ไม่มี"}
+            </p>
+
+            <p>
+                <b>เวลา:</b>
+                ${order.date}
+            </p>
+
+            <div class="status">
+                ${order.status}
+            </div>
+
+            <hr>
+
+            <div class="total">
+                ${order.total} บาท
+            </div>
+
+        </div>
+
+    `;
+
+});
+
+</script>
+
+</body>
+</html>

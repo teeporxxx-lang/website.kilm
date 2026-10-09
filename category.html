@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>เลือกเมนู</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7ef;
+    padding-bottom: 90px;
+}
+
+.header {
+    background: #ff7200;
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.back {
+    color: white;
+    text-decoration: none;
+}
+
+h2 {
+    color: #e96500;
+}
+
+.item {
+    background: white;
+    margin: 12px 0;
+    padding: 18px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+
+.item button {
+    background: #ff7200;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+}
+
+.price {
+    color: #f26a00;
+    font-weight: bold;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    box-shadow: 0 -3px 15px rgba(0,0,0,.15);
+}
+
+.bottom-nav a {
+    text-align: center;
+    text-decoration: none;
+    color: #666;
+    padding-top: 9px;
+    font-size: 12px;
+}
+
+.bottom-nav span {
+    display: block;
+    font-size: 23px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <a class="back" href="menu.html">← กลับ</a>
+    <h2 id="title" style="color:white;"></h2>
+</div>
+
+
+<div class="container">
+
+    <div id="items"></div>
+
+</div>
+
+
+<div class="bottom-nav">
+
+<a href="menu.html">
+<span>🍜</span>
+เมนูทั้งหมด
+</a>
+
+<a href="cart.html">
+<span>🛒</span>
+ตะกร้า
+</a>
+
+<a href="orders.html">
+<span>📋</span>
+รายการสั่ง
+</a>
+
+<a href="profile.html">
+<span>👤</span>
+ผู้ใช้งาน
+</a>
+
+</div>
+
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const type = params.get("type");
+
+let title = "";
+let data = [];
+
+if (type === "noodle") {
+
+    title = "🍜 เลือกเส้น";
+
+    data = [
+        "เส้นเล็ก",
+        "เส้นหมี่เหลือง",
+        "เส้นหมี่ขาว",
+        "เส้นมาม่า",
+        "วุ้นเส้น"
+    ];
+
+}
+
+else if (type === "topping") {
+
+    title = "🥩 เลือกท็อปปิ้ง";
+
+    data = [
+        "หมูหมัก",
+        "หมูสับ",
+        "เนื้อเปื่อย",
+        "หมูเด้ง",
+        "หมึกกรอบ",
+        "ตับ",
+        "เลือด",
+        "เห็ดหูหนูขาว",
+        "ลูกชิ้นหมู",
+        "ลูกชิ้นเนื้อ",
+        "เกี๊ยวน้ำ",
+        "เกี๊ยวกรอบ"
+    ];
+
+}
+
+else if (type === "soup") {
+
+    title = "🥣 เลือกน้ำซุป";
+
+    data = [
+        "น้ำใส",
+        "น้ำตก",
+        "น้ำต้มยำ",
+        "น้ำเย็นตาโฟ"
+    ];
+
+}
+
+document.getElementById("title").innerText = title;
+
+
+const items = document.getElementById("items");
+
+data.forEach(function(name) {
+
+    let price = type === "topping" ? 5 : 0;
+
+    let html = `
+        <div class="item">
+
+            <div>
+                <strong>${name}</strong>
+
+                ${
+                    type === "topping"
+                    ? `<div class="price">+ ${price} บาท</div>`
+                    : `<div class="price">เลือกได้</div>`
+                }
+
+            </div>
+
+            <button onclick="selectItem('${name}', '${type}')">
+                เลือก
+            </button>
+
+        </div>
+    `;
+
+    items.innerHTML += html;
+
+});
+
+
+function selectItem(name, type) {
+
+    let selected = JSON.parse(
+        localStorage.getItem("selectedNoodle")
+    ) || {};
+
+    if (type === "noodle") {
+
+        selected.noodle = name;
+
+    }
+
+    if (type === "soup") {
+
+        selected.soup = name;
+
+    }
+
+    if (type === "topping") {
+
+        if (!selected.toppings) {
+            selected.toppings = [];
+        }
+
+        selected.toppings.push(name);
+
+    }
+
+    localStorage.setItem(
+        "selectedNoodle",
+        JSON.stringify(selected)
+    );
+
+    alert("เลือก " + name + " แล้ว");
+
+    if (type === "topping") {
+        window.location.href = "category.html?type=topping";
+    }
+    else {
+        window.location.href = "menu.html";
+    }
+
+}
+
+</script>
+
+</body>
+</html>

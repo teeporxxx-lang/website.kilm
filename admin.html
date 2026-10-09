@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>ระบบหลังร้าน | ร้านก๋วยเตี๋ยว</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7ef;
+    padding-bottom: 30px;
+}
+
+/* ส่วนหัว */
+
+.header {
+    background: linear-gradient(135deg, #ff8a00, #ff6500);
+    color: white;
+    padding: 22px;
+    border-radius: 0 0 25px 25px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 7px 0 0;
+}
+
+/* เนื้อหา */
+
+.container {
+    width: 100%;
+    max-width: 750px;
+    margin: auto;
+    padding: 18px;
+}
+
+/* กล่องออเดอร์ */
+
+.order {
+    background: white;
+    margin-bottom: 18px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.order-number {
+    color: #e85f00;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.detail {
+    margin: 8px 0;
+    color: #444;
+}
+
+.total {
+    color: #f06400;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* สถานะ */
+
+.status {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.new {
+    background: #fff0df;
+    color: #ef6500;
+}
+
+.making {
+    background: #fff1c7;
+    color: #d98200;
+}
+
+.done {
+    background: #dff2df;
+    color: #218838;
+}
+
+/* ปุ่ม */
+
+button {
+    border: none;
+    padding: 12px 18px;
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.receive {
+    background: #ff7200;
+}
+
+.finish {
+    background: #20a050;
+}
+
+.delete {
+    background: #dc3545;
+    margin-left: 5px;
+}
+
+/* ไม่มีออเดอร์ */
+
+.empty {
+    background: white;
+    border-radius: 20px;
+    padding: 60px 20px;
+    text-align: center;
+    color: #777;
+}
+
+.empty-icon {
+    font-size: 55px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- หัวเว็บ -->
+
+<div class="header">
+
+    <h1>👨‍🍳 ระบบหลังร้าน</h1>
+
+    <p>
+        จัดการรายการสั่งซื้อก๋วยเตี๋ยว
+    </p>
+
+</div>
+
+
+<!-- รายการออเดอร์ -->
+
+<div class="container">
+
+    <div id="orders"></div>
+
+</div>
+
+
+
+<script>
+
+/* =================================
+   โหลดออเดอร์จาก localStorage
+================================= */
+
+function loadOrders() {
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    let box =
+        document.getElementById("orders");
+
+
+    box.innerHTML = "";
+
+
+    /* ไม่มีออเดอร์ */
+
+    if (orders.length === 0) {
+
+        box.innerHTML = `
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🍜
+            </div>
+
+            <h2>
+                ยังไม่มีออเดอร์
+            </h2>
+
+            <p>
+                เมื่อมีการสั่งอาหาร
+                รายการจะแสดงที่นี่
+            </p>
+
+        </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* ออเดอร์ใหม่อยู่ด้านบน */
+
+    orders
+        .slice()
+        .reverse()
+        .forEach(function(order) {
+
+
+        let statusClass = "new";
+
+        let button = "";
+
+
+        /* =========================
+           รอรับออเดอร์
+        ========================= */
+
+        if (order.status === "new") {
+
+            statusClass = "new";
+
+            button = `
+
+            <button
+            class="receive"
+            onclick="receiveOrder(${order.id})">
+
+                ✅ รับออเดอร์
+
+            </button>
+
+            `;
+
+        }
+
+
+        /* =========================
+           กำลังทำ
+        ========================= */
+
+        else if (order.status === "making") {
+
+            statusClass = "making";
+
+            button = `
+
+            <button
+            class="finish"
+            onclick="finishOrder(${order.id})">
+
+                ✅ ทำเสร็จแล้ว
+
+            </button>
+
+            `;
+
+        }
+
+
+        /* =========================
+           เสร็จแล้ว
+        ========================= */
+
+        else if (order.status === "done") {
+
+            statusClass = "done";
+
+        }
+
+
+        /* ท็อปปิ้ง */
+
+        let toppings = "ไม่มี";
+
+        if (
+            order.toppings &&
+            order.toppings.length > 0
+        ) {
+
+            toppings =
+                order.toppings.join(", ");
+
+        }
+
+
+        /* แสดงออเดอร์ */
+
+        box.innerHTML += `
+
+        <div class="order">
+
+            <div class="order-number">
+
+                🍜 ออเดอร์ #${order.id}
+
+            </div>
+
+
+            <div class="detail">
+
+                <b>เส้น:</b>
+                ${order.noodle || "-"}
+
+            </div>
+
+
+            <div class="detail">
+
+                <b>น้ำซุป:</b>
+                ${order.soup || "-"}
+
+            </div>
+
+
+            <div class="detail">
+
+                <b>ท็อปปิ้ง:</b>
+                ${toppings}
+
+            </div>
+
+
+            <div class="detail">
+
+                <b>หมายเหตุ:</b>
+                ${order.description || "ไม่มี"}
+
+            </div>
+
+
+            <div class="detail">
+
+                <b>เวลา:</b>
+                ${order.date || "-"}
+
+            </div>
+
+
+            <div
+            class="status ${statusClass}">
+
+                ${order.statusText}
+
+            </div>
+
+
+            <div class="total">
+
+                รวม ${order.total} บาท
+
+            </div>
+
+
+            ${button}
+
+
+            ${
+                order.status === "done"
+
+                ?
+
+                `<button
+                class="delete"
+                onclick="deleteOrder(${order.id})">
+
+                    🗑 ลบ
+
+                </button>`
+
+                :
+
+                ""
+
+            }
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+
+/* =================================
+   รับออเดอร์
+================================= */
+
+function receiveOrder(id) {
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    let index =
+        orders.findIndex(
+            order => order.id === id
+        );
+
+
+    if (index !== -1) {
+
+        orders[index].status = "making";
+
+        orders[index].statusText =
+            "กำลังทำ";
+
+
+        localStorage.setItem(
+            "orders",
+            JSON.stringify(orders)
+        );
+
+
+        loadOrders();
+
+    }
+
+}
+
+
+
+/* =================================
+   ทำเสร็จแล้ว
+================================= */
+
+function finishOrder(id) {
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    let index =
+        orders.findIndex(
+            order => order.id === id
+        );
+
+
+    if (index !== -1) {
+
+        orders[index].status = "done";
+
+        orders[index].statusText =
+            "เสร็จแล้ว";
+
+
+        localStorage.setItem(
+            "orders",
+            JSON.stringify(orders)
+        );
+
+
+        loadOrders();
+
+    }
+
+}
+
+
+
+/* =================================
+   ลบออเดอร์
+================================= */
+
+function deleteOrder(id) {
+
+    let orders =
+        JSON.parse(
+            localStorage.getItem("orders")
+        ) || [];
+
+
+    orders =
+        orders.filter(
+            order => order.id !== id
+        );
+
+
+    localStorage.setItem(
+        "orders",
+        JSON.stringify(orders)
+    );
+
+
+    loadOrders();
+
+}
+
+
+
+/* =================================
+   โหลดครั้งแรก
+================================= */
+
+loadOrders();
+
+
+/* =================================
+   ตรวจสอบออเดอร์ใหม่ทุก 1 วินาที
+================================= */
+
+setInterval(function() {
+
+    loadOrders();
+
+}, 1000);
+
+</script>
+
+
+</body>
+
+</html>

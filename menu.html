@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>เลือกเมนู | ร้านก๋วยเตี๋ยว</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7ef;
+    padding-bottom: 30px;
+}
+
+/* =========================
+   ส่วนหัว
+========================= */
+
+.header {
+    background: linear-gradient(135deg, #ff8a00, #ff6500);
+    color: white;
+    padding: 22px 20px;
+    border-radius: 0 0 25px 25px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 7px 0 0;
+    font-size: 14px;
+}
+
+
+/* =========================
+   เนื้อหา
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 18px;
+}
+
+
+/* =========================
+   หัวข้อ
+========================= */
+
+.section {
+    margin-bottom: 25px;
+}
+
+.section-title {
+    color: #e85f00;
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+
+/* =========================
+   รายการ
+========================= */
+
+.menu-item {
+    background: white;
+    padding: 15px 16px;
+    margin-bottom: 10px;
+
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.07);
+}
+
+
+/* ชื่อ */
+
+.menu-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* ปุ่มเลือก */
+
+.select-btn {
+    border: none;
+
+    background: #ff7200;
+
+    color: white;
+
+    padding: 9px 17px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.select-btn:hover {
+    background: #e86100;
+}
+
+
+/* ปุ่มที่เลือกแล้ว */
+
+.selected {
+    background: #20a050 !important;
+}
+
+
+/* =========================
+   รายการท็อปปิ้ง
+========================= */
+
+.topping-item {
+    background: white;
+
+    padding: 15px 16px;
+
+    margin-bottom: 10px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.07);
+}
+
+.topping-price {
+    color: #f06400;
+
+    font-size: 14px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================
+   ปุ่มไปตะกร้า
+========================= */
+
+.cart-button {
+    width: 100%;
+
+    border: none;
+
+    background: #ff7200;
+
+    color: white;
+
+    padding: 15px;
+
+    border-radius: 13px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-top: 10px;
+
+    box-shadow:
+        0 4px 10px rgba(255,114,0,0.25);
+}
+
+.cart-button:hover {
+    background: #e86100;
+}
+
+
+/* =========================
+   กล่องสรุป
+========================= */
+
+.summary {
+    background: white;
+
+    padding: 18px;
+
+    margin-top: 20px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.07);
+}
+
+.summary h3 {
+    margin-top: 0;
+
+    color: #e85f00;
+}
+
+.summary p {
+    margin: 8px 0;
+
+    color: #555;
+}
+
+
+/* =========================
+   โทรศัพท์จอเล็ก
+========================= */
+
+@media (max-width: 400px) {
+
+    .container {
+        padding: 14px;
+    }
+
+    .header {
+        padding: 20px 16px;
+    }
+
+    .menu-item,
+    .topping-item {
+        padding: 13px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     ส่วนหัว
+========================= -->
+
+<div class="header">
+
+    <h2>
+        🍜 เลือกเมนูก๋วยเตี๋ยว
+    </h2>
+
+    <p>
+        เลือกเส้น น้ำซุป และท็อปปิ้งที่ต้องการ
+    </p>
+
+</div>
+
+
+
+<div class="container">
+
+
+    <!-- =========================
+         เลือกเส้น
+    ========================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            🍜 เลือกเส้น
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                เส้นเล็ก
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectNoodle('เส้นเล็ก', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                เส้นหมี่เหลือง
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectNoodle('เส้นหมี่เหลือง', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                เส้นหมี่ขาว
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectNoodle('เส้นหมี่ขาว', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                เส้นมาม่า
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectNoodle('เส้นมาม่า', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                วุ้นเส้น
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectNoodle('วุ้นเส้น', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         เลือกน้ำซุป
+    ========================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            🥣 เลือกน้ำซุป
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                น้ำใส
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectSoup('น้ำใส', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                น้ำตก
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectSoup('น้ำตก', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                น้ำต้มยำ
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectSoup('น้ำต้มยำ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-item">
+
+            <div class="menu-name">
+                น้ำเย็นตาโฟ
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectSoup('น้ำเย็นตาโฟ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         เลือกท็อปปิ้ง
+    ========================= -->
+
+    <div class="section">
+
+        <div class="section-title">
+            🥩 เลือกท็อปปิ้ง
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    หมูหมัก
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('หมูหมัก', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    หมูสับ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('หมูสับ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    เนื้อเปื่อย
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('เนื้อเปื่อย', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    หมูเด้ง
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('หมูเด้ง', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    หมึกกรอบ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('หมึกกรอบ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    ตับ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('ตับ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    เลือด
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('เลือด', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    เห็ดหูหนูขาว
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('เห็ดหูหนูขาว', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    ลูกชิ้นหมู
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('ลูกชิ้นหมู', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    ลูกชิ้นเนื้อ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('ลูกชิ้นเนื้อ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    เกี๊ยวน้ำ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('เกี๊ยวน้ำ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+
+        <div class="topping-item">
+
+            <div>
+                <div class="menu-name">
+                    เกี๊ยวกรอบ
+                </div>
+
+                <div class="topping-price">
+                    5 บาท
+                </div>
+            </div>
+
+            <button
+                class="select-btn"
+                onclick="selectTopping('เกี๊ยวกรอบ', this)">
+
+                เลือก
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         สรุปรายการที่เลือก
+    ========================= -->
+
+    <div class="summary">
+
+        <h3>
+            🛒 รายการที่เลือก
+        </h3>
+
+        <p>
+            เส้น:
+            <b id="showNoodle">ยังไม่ได้เลือก</b>
+        </p>
+
+        <p>
+            น้ำซุป:
+            <b id="showSoup">ยังไม่ได้เลือก</b>
+        </p>
+
+        <p>
+            ท็อปปิ้ง:
+            <b id="showTopping">ยังไม่ได้เลือก</b>
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================
+         ไปตะกร้า
+    ========================= -->
+
+    <button
+        class="cart-button"
+        onclick="goCart()">
+
+        🛒 ไปตะกร้า
+
+    </button>
+
+
+</div>
+
+
+
+<script>
+
+/* ==================================
+   ข้อมูลที่เลือก
+================================== */
+
+let selected =
+    JSON.parse(
+        localStorage.getItem("selectedNoodle")
+    ) || {};
+
+
+selected.toppings =
+    selected.toppings || [];
+
+
+
+/* ==================================
+   แสดงข้อมูลเดิม
+================================== */
+
+updateSummary();
+
+
+
+/* ==================================
+   เลือกเส้น
+================================== */
+
+function selectNoodle(name, button) {
+
+    selected.noodle = name;
+
+    localStorage.setItem(
+        "selectedNoodle",
+        JSON.stringify(selected)
+    );
+
+
+    /* เปลี่ยนปุ่ม */
+
+    document
+        .querySelectorAll(".menu-item .select-btn")
+        .forEach(function(btn) {
+
+            btn.classList.remove("selected");
+
+            btn.textContent = "เลือก";
+
+        });
+
+
+    button.classList.add("selected");
+
+    button.textContent = "✓ เลือกแล้ว";
+
+
+    updateSummary();
+
+}
+
+
+
+/* ==================================
+   เลือกน้ำซุป
+================================== */
+
+function selectSoup(name, button) {
+
+    selected.soup = name;
+
+    localStorage.setItem(
+        "selectedNoodle",
+        JSON.stringify(selected)
+    );
+
+
+    document
+        .querySelectorAll(".section:nth-child(2) .select-btn")
+        .forEach(function(btn) {
+
+            btn.classList.remove("selected");
+
+            btn.textContent = "เลือก";
+
+        });
+
+
+    button.classList.add("selected");
+
+    button.textContent = "✓ เลือกแล้ว";
+
+
+    updateSummary();
+
+}
+
+
+
+/* ==================================
+   เลือกท็อปปิ้ง
+================================== */
+
+function selectTopping(name, button) {
+
+    selected.toppings =
+        selected.toppings || [];
+
+
+    /* ถ้าเลือกอยู่แล้ว */
+
+    if (
+        selected.toppings.includes(name)
+    ) {
+
+        selected.toppings =
+            selected.toppings.filter(
+                function(item) {
+
+                    return item !== name;
+
+                }
+            );
+
+        button.classList.remove("selected");
+
+        button.textContent = "เลือก";
+
+    }
+
+
+    /* ถ้ายังไม่ได้เลือก */
+
+    else {
+
+        selected.toppings.push(name);
+
+        button.classList.add("selected");
+
+        button.textContent = "✓ เลือกแล้ว";
+
+    }
+
+
+    localStorage.setItem(
+        "selectedNoodle",
+        JSON.stringify(selected)
+    );
+
+
+    updateSummary();
+
+}
+
+
+
+/* ==================================
+   อัปเดตสรุป
+================================== */
+
+function updateSummary() {
+
+
+    document.getElementById(
+        "showNoodle"
+    ).textContent =
+        selected.noodle ||
+        "ยังไม่ได้เลือก";
+
+
+    document.getElementById(
+        "showSoup"
+    ).textContent =
+        selected.soup ||
+        "ยังไม่ได้เลือก";
+
+
+    document.getElementById(
+        "showTopping"
+    ).textContent =
+
+        selected.toppings.length > 0
+
+        ?
+
+        selected.toppings.join(", ")
+
+        :
+
+        "ยังไม่ได้เลือก";
+
+}
+
+
+
+/* ==================================
+   ไปตะกร้า
+================================== */
+
+function goCart() {
+
+
+    if (!selected.noodle) {
+
+        alert(
+            "กรุณาเลือกเส้นก่อน"
+        );
+
+        return;
+
+    }
+
+
+    if (!selected.soup) {
+
+        alert(
+            "กรุณาเลือกน้ำซุปก่อน"
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "selectedNoodle",
+        JSON.stringify(selected)
+    );
+
+
+    location.href =
+        "cart.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
